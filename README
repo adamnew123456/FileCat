@@ -2,19 +2,29 @@ This is an attempt at an app to transfer files between an Android devices and
 computers without having to configure a separate FTP server.
 
 It includes:
-  - the Android app (compile by running `ant clean && ant debug` and getting the APK onto the device)
-  - the utility (runs on any system with Java installed - currently, only a Tcl GUI exists, but it can
-                 run from the commandline - see below).
+  - the Android app
+  - the utility (see util/README)
 
 It is able to transfer files from:
   - Android device <-> Android device
   - computer <-> Android device
   - computer <-> computer
 
+========== Building ==========
+
+1. Download the Android SDK. Let `SDKDIR` be wherever
+   you installed it.
+
+2. Run `SDKDIR/tools/android update project --path .` from this directory.
+
+3. Run `ant debug`, and copy the APK over to the device.
+
+See util/README on how to build the utility.
+
 ========== Usage ==========
 
 Using the program is simple on two Android devices:
-  1. Get onto the device which is to __recieve__ the file. Choose a port number (2000-60000),
+  1. Get onto the device which is to __recieve__ the file. Choose a port number (generally, 2000-60000),
      and an output file. Press "Recieve File" - the app should freeze while waiting
      for data.
 
