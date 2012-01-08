@@ -1,0 +1,7 @@
+This is an attempt at an app to transfer files between an Android device and
+a computer without having to use the overhead of FTP.
+
+It is currently unstable (transferring a 1mB PDF, for example, reports file corruption)
+when transferring data to/from an Android device. However, it runs successfully between two computers.
+
+(Licensed under the GNU GPLv3)
