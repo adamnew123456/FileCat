@@ -1,0 +1,13 @@
+<project name="FileCatGUI" default="dist" basedir=".">
+    <description>
+        A utility which facilitates transferring files between Androids
+        and computers.
+    </description>
+    <target name="compile">
+        <mkdir dir="build" />
+        <javac srcdir="src" destdir="build" />
+    </target>
+    <target name="clean">
+        <delete dir="build" />
+    </target>
+</project>

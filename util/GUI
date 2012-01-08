@@ -2,6 +2,8 @@
 # Tcl script which acts as a frontend (I'm too lazy to learn Swing)
 package require Tk
 
+cd build
+
 # Callback for the file opener
 proc cb_filedialog {ent_name type} {
     if {![string compare $type open]} {
@@ -59,3 +61,5 @@ pack [button .s.go -text "Send File" -command send_file] -fill x -expand 1
 entry_label .r.port "Local Port"
 make_filedialog .r.sel fname save
 pack [button .r.go -text "Recieve File" -command recv_file] -fill x -expand 1
+
+wm title . "FileCat"
