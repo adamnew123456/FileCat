@@ -1,3 +1,16 @@
 This is the utility, which comes in two parts:
-  - the command line frontend (java CLI send ip port filename || java CLI read port filename)
+  - the command line frontend
   - the Tcl/Tk GUI
+
+========== Building ==========
+
+1. Run `ant compile`
+
+========== Using ==========
+
+A. To use the Tcl GUI, run `wish GUI`.
+
+B. To use the command line program, go into the build
+   directory and run `java CLI`. Sending is done by
+   running the command `java CLI $IP $PORT $INPUTFILE`, while
+   recieving is done via `java CLI $PORT $OUTPUTFILE`.
