@@ -1,7 +1,39 @@
-This is an attempt at an app to transfer files between an Android device and
-a computer without having to use the overhead of FTP.
+This is an attempt at an app to transfer files between an Android devices and
+computers without having to configure a separate FTP server.
 
-It is currently unstable (transferring a 1mB PDF, for example, reports file corruption)
-when transferring data to/from an Android device. However, it runs successfully between two computers.
+It includes:
+  - the Android app (compile by running `ant clean && ant debug` and getting the APK onto the device)
+  - the utility (runs on any system with Java installed - currently, only a Tcl GUI exists, but it can
+                 run from the commandline - see below).
+
+It is able to transfer files from:
+  - Android device <-> Android device
+  - computer <-> Android device
+  - computer <-> computer
+
+========== Usage ==========
+
+Using the program is simple on two Android devices:
+  1. Get onto the device which is to __recieve__ the file. Choose a port number (2000-60000),
+     and an output file. Press "Recieve File" - the app should freeze while waiting
+     for data.
+
+  2. Then, go onto the device which is to __send__ the file. Enter the IP address
+     of the first device, the port chosen earlier, and the file to send.
+     Press "Send File" - this device should appear to freeze. When it is done sending
+     the data (the button is no longer hilighted), the file is loaded on the first device.
+
+Similarly, to go PC -> Android:
+  1. Repeat step 1 above.
+
+  2. Open the command line, go to the util/ subdirectory, and run `java CLI send IP PORT FILE`
+     where IP is the IP of the first device, PORT is the port chosen earlier, and FILE is
+     the file to send.
+
+Finally, sending PC -> PC:
+  1. On the first computer, go to the util/ subdirectory. Run `java CLI read PORT FILE`,
+     where PORT is a port number (2000-60000) and FILE is the file to output to.
+
+  2. Repeat step 2 above.
 
 (Licensed under the GNU GPLv3)
