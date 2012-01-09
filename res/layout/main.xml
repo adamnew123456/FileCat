@@ -6,7 +6,7 @@ android:layout_height="fill_parent"
 android:orientation="vertical"
 xmlns:android="http://schemas.android.com/apk/res/android"
 >
-<EditText
+<TextView
 android:id="@+id/widget42"
 android:layout_width="wrap_content"
 android:layout_height="wrap_content"
@@ -14,7 +14,7 @@ android:text="IP Address - Send Only"
 android:textSize="18sp"
 android:editable="false"
 >
-</EditText>
+</TextView>
 <EditText
 android:id="@+id/ipaddr"
 android:layout_width="256px"
@@ -23,7 +23,7 @@ android:text=""
 android:textSize="18sp"
 >
 </EditText>
-<EditText
+<TextView
 android:id="@+id/widget43"
 android:layout_width="wrap_content"
 android:layout_height="wrap_content"
@@ -31,7 +31,7 @@ android:text="Port Number"
 android:textSize="18sp"
 android:editable="false"
 >
-</EditText>
+</TextView>
 <EditText
 android:id="@+id/port"
 android:layout_width="250px"
@@ -40,7 +40,7 @@ android:text=""
 android:textSize="18sp"
 >
 </EditText>
-<EditText
+<TextView
 android:id="@+id/widget44"
 android:layout_width="wrap_content"
 android:layout_height="wrap_content"
@@ -48,7 +48,7 @@ android:text="File Name To Send/Recieve"
 android:textSize="18sp"
 android:editable="false"
 >
-</EditText>
+</TextView>
 <EditText
 android:id="@+id/fname"
 android:layout_width="242px"
