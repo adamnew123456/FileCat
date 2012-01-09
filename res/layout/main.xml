@@ -71,4 +71,11 @@ android:layout_height="wrap_content"
 android:text="Send File"
 >
 </Button>
+<TextView
+android:id="@+id/log"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:textSize="18sp"
+>
+</TextView>
 </TableLayout>
