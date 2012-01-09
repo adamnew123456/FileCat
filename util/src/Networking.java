@@ -45,6 +45,11 @@ public class Networking
         while (size >= BUFFER_SIZE)
         {
             size -= read_chunk(gz, bs, buffer);
+            // This prevents the stack from growing too large on
+            // Android devices. Apparently, they can't fit a whole
+            // 9.9Mb file into the stack.
+            fstream.write(bs.toByteArray());
+            bs.reset();
         }
 
         read_leftover(gz, bs);
