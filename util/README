@@ -1,11 +1,12 @@
-This is the utility, which comes in two parts:
+This is the utility, which comes in three parts:
   - the command line frontend
   - the Tcl/Tk GUI
   - the Python Tkinter GUI
 
 ========== Building ==========
 
-1. Run `ant compile`
+1. Run `ant compile`. This should automatically build what resides under `src/`
+   into `build/`.
 
 ========== Using ==========
 
@@ -13,7 +14,6 @@ A. To use the Tcl GUI, run `wish GUI.tcl`.
 
 B. To use the Python GUI, run `python GUI.py`.
 
-C. To use the command line program, go into the build
-   directory and run `java CLI`. Sending is done by
-   running the command `java CLI $IP $PORT $INPUTFILE`, while
-   recieving is done via `java CLI $PORT $OUTPUTFILE`.
+C. Change directory to `build/`. To use the command line program, run:
+   - `java CLI $IP $PORT $INPUTFILE` to send a file
+   - `java CLI $PORT $OUTPUTFILE` to read a file
