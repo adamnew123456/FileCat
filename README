@@ -23,26 +23,34 @@ See util/README on how to build the utility.
 
 ========== Usage ==========
 
+NOTE: There are 2 GUI frontends for PC's. This talks about the Python version, since most
+will end up using it.
+
 Using the program is simple on two Android devices:
   1. Get onto the device which is to __recieve__ the file. Choose a port number (generally, 2000-60000),
-     and an output file. Press "Recieve File" - the app should freeze while waiting
-     for data.
+     and an output file. Press "Recieve File" - the app will print "Starting...".
 
   2. Then, go onto the device which is to __send__ the file. Enter the IP address
      of the first device, the port chosen earlier, and the file to send.
-     Press "Send File" - this device should appear to freeze. When it is done sending
-     the data (the button is no longer hilighted), the file is loaded on the first device.
+     Press "Send File" - this device should print "Starting...". When it is done sending
+     the data, the app should print "Starting... Finished".
+
+  3. Any errors are printed as raw Java exceptions, such as (if one leaves the Port option empty):
+     "Starting... Failed with exception 'NumberFormatException...'"
 
 Similarly, to go PC -> Android:
   1. Repeat step 1 above.
 
-  2. Open the command line, go to the util/ subdirectory, and run `java CLI send IP PORT FILE`
-     where IP is the IP of the first device, PORT is the port chosen earlier, and FILE is
-     the file to send.
+  2. Open the command line, go to the util/ subdirectory, and run `python GUI.py`. Enter
+     the IP address to send to, the port number selected in step 1 and select a file to save to 
+     (note that all saves are relative to the `build/` subdirectory). Click 'Send File' - the utility should 
+     print `[...] Starting...` at the bottom, and then `[...] Starting... Success` when finished.
+
+  3. There is no outputting of exceptions like there is in the Android app. Check what you input.
 
 Finally, sending PC -> PC:
-  1. On the first computer, go to the util/ subdirectory. Run `java CLI read PORT FILE`,
-     where PORT is a port number (2000-60000) and FILE is the file to output to.
+  1. On the first computer, go to the util/ subdirectory, and run `python GUI.py`. Enter
+     a port number, and a file to read. Click `Read File`. The utility should print `[...] Starting...`.
 
   2. Repeat step 2 above.
 

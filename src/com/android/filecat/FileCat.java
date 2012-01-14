@@ -14,7 +14,7 @@ public class FileCat extends Activity
     EditText e_ipaddr, e_port, e_filename;
     TextView t_log;
     
-    class SendTask extends AsyncTask<Object,Void,Boolean>
+    class SendTask extends AsyncTask<Object,Void,String>
     {
         private TextView logging;
         private String s_ipaddr, s_port, s_filename;
@@ -33,21 +33,21 @@ public class FileCat extends Activity
             logging.append("Starting... ");
         }
 
-        protected void onPostExecute(Boolean success)
+        protected void onPostExecute(String success)
         {
-            if (success.booleanValue())
+            if (success == null)
             {
                 logging.append("Succeeded\n");
             }
             else
             {
-                logging.append("Failed\n");
+                logging.append("Failed with  exception '" + success + "'\n");
             }
         }
 
-        protected Boolean doInBackground(final Object... args)
+        protected String doInBackground(final Object... args)
         {
-            boolean success = true;
+            String success = null;
             try
             {
                 int port = Integer.parseInt(s_port);
@@ -55,14 +55,14 @@ public class FileCat extends Activity
             }
             catch (Exception e)
             {
-                success = false;
+                success = e.toString();
             }
 
-            return new Boolean(success);
+            return success;
         }
     }
 
-    class ReadTask extends AsyncTask<Object,Void,Boolean>
+    class ReadTask extends AsyncTask<Object,Void,String>
     {
         private TextView logging;
         private String s_ipaddr, s_port, s_filename;
@@ -81,21 +81,21 @@ public class FileCat extends Activity
             logging.append("Starting... ");
         }
 
-        protected void onPostExecute(Boolean success)
+        protected void onPostExecute(String success)
         {
-            if (success.booleanValue())
+            if (success == null)
             {
                 logging.append("Succeeded\n");
             }
             else
             {
-                logging.append("Failed\n");
+                logging.append("Failed with exception '" + success + "'\n");
             }
         }
 
-        protected Boolean doInBackground(final Object... args)
+        protected String doInBackground(final Object... args)
         {
-            boolean success = true;
+            String success = null;
             try 
             {
                 int port = Integer.parseInt(s_port);
@@ -103,10 +103,10 @@ public class FileCat extends Activity
             }
             catch (Exception e)
             {
-                success = false;
+                success = e.toString();
             }
 
-            return new Boolean(success);
+            return success;
         }
     }
 
