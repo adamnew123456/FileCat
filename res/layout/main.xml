@@ -38,6 +38,7 @@ android:layout_width="250px"
 android:layout_height="44px"
 android:text=""
 android:textSize="18sp"
+android:inputType="number"
 >
 </EditText>
 <TextView
