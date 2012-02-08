@@ -5,7 +5,20 @@
     </description>
     <target name="compile">
         <mkdir dir="build" />
-        <javac srcdir="src" destdir="build" />
+        <mkdir dir="build/gui-classes" />
+        <mkdir dir="build/cli-classes" />
+        <javac srcdir="src" destdir="build/cli-classes" includes="Networking.java,CLI.java" />
+        <javac srcdir="src" destdir="build/gui-classes" includes="Networking.java,GUI.java" />
+        <jar destfile="build/GUI.jar" basedir="build/gui-classes">
+            <manifest>
+                <attribute name="Main-Class" value="GUI" />
+            </manifest>
+        </jar>
+        <jar destfile="build/CLI.jar" basedir="build/cli-classes">
+            <manifest>
+                <attribute name="Main-Class" value="CLI" />
+            </manifest>
+        </jar>
     </target>
     <target name="clean">
         <delete dir="build" />
