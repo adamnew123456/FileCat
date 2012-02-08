@@ -1,7 +1,6 @@
-This is the utility, which comes in three parts:
+This is the utility, which comes in two parts:
   - the command line frontend
-  - the Tcl/Tk GUI
-  - the Python Tkinter GUI
+  - the Swing frontend
 
 ========== Building ==========
 
@@ -10,10 +9,8 @@ This is the utility, which comes in three parts:
 
 ========== Using ==========
 
-A. To use the Tcl GUI, run `wish GUI.tcl`.
+A. Change directory to `build/`, and run `java -jar GUI.jar`
 
-B. To use the Python GUI, run `python GUI.py`.
-
-C. Change directory to `build/`. To use the command line program, run:
-   - `java CLI $IP $PORT $INPUTFILE` to send a file
-   - `java CLI $PORT $OUTPUTFILE` to read a file
+B. Change directory to `build/`. To use the command line program, run:
+   - `java -jar CLI.jar $IP $PORT $INPUTFILE` to send a file
+   - `java -jar CLI.jar $PORT $OUTPUTFILE` to read a file
