@@ -10,6 +10,7 @@ public class GUI
     private JPanel sendFrame;
     private JPanel readFrame;
     private JTabbedPane actionPane;
+    private JProgressBar waiting;
     
     private JTextField sendIP;
     private JSpinner sendPort;
@@ -23,6 +24,9 @@ public class GUI
     private JTextField readFilename;
     private JButton readChoose;
     private JButton readDo;
+
+    final private Runnable networksuccess;
+    final private Runnable networkfail;
     
     public static void main(String[] args)
     {
@@ -31,10 +35,26 @@ public class GUI
     
     public GUI()
     {
+        networksuccess = (new Runnable() {
+            public void run()
+            {
+                waiting.setIndeterminate(false);
+            }
+        });
+
+        networkfail = (new Runnable() {
+            public void run()
+            {
+                waiting.setIndeterminate(false);
+                JOptionPane.showMessageDialog(null, "Network operation failed", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
         window = new JFrame("FileCat GUI");
         sendFrame = new JPanel();
         readFrame = new JPanel();
         actionPane = new JTabbedPane();
+        waiting = new JProgressBar(0, 100);
         
         sendIP = new JTextField();
         sendPort = new JSpinner(new SpinnerNumberModel(2555, 0, 60000, 1));
@@ -71,8 +91,10 @@ public class GUI
      */
     private void configGUI()
     {
+        window.getContentPane().setLayout(new BoxLayout(window.getContentPane(), BoxLayout.Y_AXIS));
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);        
         window.getContentPane().add(actionPane);
+        window.getContentPane().add(waiting);
         
         actionPane.addTab("Send File", sendFrame);
         actionPane.addTab("Read File", readFrame);
@@ -101,17 +123,40 @@ public class GUI
         packColumn(readFrame, readComponents);
         
         sendDo.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) 
+           @Override
+            public void actionPerformed(ActionEvent e)
             {
-                try 
-                {
-                    Networking.do_write(sendIP.getText(), (Integer)sendPort.getValue(), sendFilename.getText());
-                } 
-                catch (IOException ex) 
-                {
-                    JOptionPane.showMessageDialog(window, "Error Sending: " + ex.toString());    
-                }
+                waiting.setIndeterminate(true);
+
+                final String ip = sendIP.getText();
+                final Integer port = (Integer)sendPort.getValue();
+                final String filename = sendFilename.getText();
+
+                new Thread(new Runnable() {
+                    public void run()
+                    {
+                        boolean failed = false;
+                        try
+                        {
+                            Networking.do_write(ip, port, filename);
+                        }
+                        catch (IOException ex)
+                        {
+                            failed = true;
+                        }
+
+                        try
+                        {
+                            if (failed)
+                                SwingUtilities.invokeLater(networkfail);
+                            else
+                                SwingUtilities.invokeLater(networksuccess);
+                        }
+                        catch (Exception ex)
+                        {
+                        }
+                    }
+                }).run();
             }
         });
         
@@ -119,14 +164,36 @@ public class GUI
             @Override
             public void actionPerformed(ActionEvent e) 
             {
-                try
-                {
-                    Networking.do_read((Integer)readPort.getValue(), readFilename.getText());
-                }
-                catch (IOException ex)
-                {
-                    JOptionPane.showMessageDialog(window, "Error Reading: " + ex.toString());
-                }
+                waiting.setIndeterminate(true);
+
+                final Integer port = (Integer)readPort.getValue();
+                final String filename = readFilename.getText();
+
+                new Thread(new Runnable() {
+                    public void run()
+                    {
+                        boolean failed = false;
+                        try
+                        {
+                            Networking.do_read(port, filename);
+                        }
+                        catch (IOException ex)
+                        {
+                            failed = true;
+                        }
+
+                        try
+                        {
+                            if (failed)
+                                SwingUtilities.invokeLater(networkfail);
+                            else
+                                SwingUtilities.invokeLater(networksuccess);
+                        }
+                        catch (Exception ex)
+                        {
+                        }
+                    }
+                }).run();
             }
         });
         
