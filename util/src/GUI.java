@@ -39,6 +39,7 @@ public class GUI
             public void run()
             {
                 waiting.setIndeterminate(false);
+                waiting.setString("");
             }
         });
 
@@ -46,6 +47,7 @@ public class GUI
             public void run()
             {
                 waiting.setIndeterminate(false);
+                waiting.setString("");
                 JOptionPane.showMessageDialog(null, "Network operation failed", "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
@@ -127,6 +129,7 @@ public class GUI
             public void actionPerformed(ActionEvent e)
             {
                 waiting.setIndeterminate(true);
+                waiting.setString("Waiting for network...");
 
                 final String ip = sendIP.getText();
                 final Integer port = (Integer)sendPort.getValue();
@@ -156,7 +159,7 @@ public class GUI
                         {
                         }
                     }
-                }).run();
+                }).start();
             }
         });
         
@@ -165,6 +168,7 @@ public class GUI
             public void actionPerformed(ActionEvent e) 
             {
                 waiting.setIndeterminate(true);
+                waiting.setString("Waiting for network...");
 
                 final Integer port = (Integer)readPort.getValue();
                 final String filename = readFilename.getText();
@@ -193,7 +197,7 @@ public class GUI
                         {
                         }
                     }
-                }).run();
+                }).start();
             }
         });
         
