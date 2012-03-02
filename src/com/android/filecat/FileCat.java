@@ -9,6 +9,8 @@ import android.view.*;
 import android.util.*;
 import android.widget.*;
 
+import translib.FileTrans;
+
 public class FileCat extends Activity
 {
     EditText e_ipaddr, e_port, e_filename;
@@ -51,7 +53,7 @@ public class FileCat extends Activity
             try
             {
                 int port = Integer.parseInt(s_port);
-                Networking.do_write(s_ipaddr, port, s_filename);
+                FileTrans.doWrite(s_ipaddr, port, s_filename);
             }
             catch (Exception e)
             {
@@ -99,7 +101,7 @@ public class FileCat extends Activity
             try 
             {
                 int port = Integer.parseInt(s_port);
-                Networking.do_read(port, s_filename);
+                FileTrans.doRead(port, s_filename);
             }
             catch (Exception e)
             {

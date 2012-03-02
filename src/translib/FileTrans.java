@@ -1,14 +1,14 @@
-package com.android.filecat;
+package translib;
 
 import java.net.*;
 import java.io.*;
 
-public class Networking 
+public class FileTrans 
 {
     static final int BUFFER_SIZE=2048;
 
     // Reads in all data that can be stuffed into a buffer
-    private static int read_chunk(InputStream input, ByteArrayOutputStream bytes, byte[] buffer) throws
+    private static int readChunk(InputStream input, ByteArrayOutputStream bytes, byte[] buffer) throws
         IOException
     {
         int read = input.read(buffer, 0, BUFFER_SIZE);
@@ -21,7 +21,7 @@ public class Networking
     }
 
     // Reads all data over the socket that cannot be stuffed into a buffer
-    private static void read_leftover(InputStream input, ByteArrayOutputStream bytes) throws
+    private static void readLeftover(InputStream input, ByteArrayOutputStream bytes) throws
         IOException
     {
         int data = 0;
@@ -29,7 +29,7 @@ public class Networking
             bytes.write(data);
     }
 
-    public static void do_read(int port, String outname) throws 
+    public static void doRead(int port, String outname) throws 
         IOException 
     {
         ServerSocket server = new ServerSocket(port);
@@ -39,32 +39,32 @@ public class Networking
         DataInputStream ds = new DataInputStream(client.getInputStream());
         int size = ds.readInt();
 
-        FileOutputStream fstream = new FileOutputStream(outname);
-        InputStream gz = client.getInputStream();
+        FileOutputStream os = new FileOutputStream(outname);
+        InputStream is = client.getInputStream();
 
         byte[] buffer = new byte[BUFFER_SIZE];
         ByteArrayOutputStream bs = new ByteArrayOutputStream();
         while (size >= BUFFER_SIZE)
         {
-            size -= read_chunk(gz, bs, buffer);
+            size -= read_chunk(is, bs, buffer);
             // This prevents the stack from growing too large on
             // Android devices. Apparently, they can't fit a whole
             // 9.9Mb file into the stack.
-            fstream.write(bs.toByteArray());
+            os.write(bs.toByteArray());
             bs.reset();
         }
 
-        read_leftover(gz, bs);
-        fstream.write(bs.toByteArray());
+        read_leftover(is, bs);
+        os.write(bs.toByteArray());
 
         server.close();
         client.close();
-        gz.close();
+        is.close();
         ds.close();
-        fstream.close();
+        os.close();
     }
 
-    public static void do_write(String host, int port, String inname) throws
+    public static void doWrite(String host, int port, String inname) throws
         IOException
     {
         Socket client = new Socket(host, port);
@@ -74,19 +74,19 @@ public class Networking
         int length = (int)(input.length());
         ds.writeInt(length);
 
-        FileInputStream fstream = new FileInputStream(input);
-        OutputStream gz = client.getOutputStream();
+        FileInputStream is = new FileInputStream(input);
+        OutputStream os = client.getOutputStream();
 
         int read;
         byte[] buffer = new byte[BUFFER_SIZE];
-        while ((read = fstream.read(buffer, 0, BUFFER_SIZE)) > 0)
+        while ((read = is.read(buffer, 0, BUFFER_SIZE)) > 0)
         {
-            gz.write(buffer, 0, read);
+            os.write(buffer, 0, read);
         }
 
-        gz.flush();
-        gz.close();
+        os.flush();
+        os.close();
         ds.close();
-        fstream.close();
+        is.close();
     }
 }
